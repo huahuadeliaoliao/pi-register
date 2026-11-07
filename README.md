@@ -1,6 +1,10 @@
 # Register
 
-![Register — a living workspace for pi](assets/brand/register-pi.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/brand/register-pi-reversed.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/brand/register-pi.png">
+  <img alt="Register — a living workspace for pi" src="assets/brand/register-pi.png">
+</picture>
 
 ## Let your agent think. Keep your repository for the work.
 

@@ -65,6 +65,7 @@ test("the npm package includes its entry point and excludes development and work
 		"src/viewer.ts",
 		"compat/pi-compact-model.patch",
 		"assets/brand/register-pi.png",
+		"assets/brand/register-pi-reversed.png",
 		"assets/brand/register-pi.svg",
 		"assets/brand/register-horizontal.svg",
 		"assets/brand/register-icon.svg",
