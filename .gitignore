@@ -1,0 +1,23 @@
+node_modules/
+dist/
+coverage/
+*.log
+*.tgz
+.DS_Store
+.env
+.env.*
+!.env.example
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+.pi/
+__pycache__/
+.venv/
+
+# Local sessions, credentials and development experiments are not source.
+auth.json
+sessions/
+/eval/
+/EVALUATION.md
+/test/evaluation*.test.ts

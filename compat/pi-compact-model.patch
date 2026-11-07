@@ -1,0 +1,64 @@
+--- a/index.ts
++++ b/index.ts
+@@ -360,9 +360,11 @@
+ 
+ 	// ------------------------------------------------------------- the hook
+ 
+-	// Fail-closed: pi treats a throwing handler as "no result" and then compacts
+-	// with the session model itself, so nothing may escape this handler.
+-	pi.on("session_before_compact", async (event, ctx): Promise<SessionBeforeCompactResult> => {
++	// Fail-closed both standalone and when serving an acknowledged coordinator.
++	async function handleCompaction(
++		event: SessionBeforeCompactEvent,
++		ctx: ExtensionContext,
++	): Promise<SessionBeforeCompactResult> {
+ 		lastCtx = ctx;
+ 		const stop = (message: string): SessionBeforeCompactResult => {
+ 			notify(ctx, message, "error");
+@@ -373,6 +375,46 @@
+ 		} catch (err) {
+ 			return stop(`Compaction cancelled: compact-model hit an internal error: ${errMsg(err)}`);
+ 		}
++	}
++
++	// Structural public event-bus protocol; no dependency on Register or its location.
++	// A lease is an explicit acknowledgement, never a guess based on load order.
++	let producerAlive = true;
++	const coordinatorLeases = new Set<symbol>();
++	const unsubscribeProducer = pi.events.on("pi-register:compaction-producer:v1", (value: unknown) => {
++		if (!producerAlive || !value || typeof value !== "object") return;
++		const request = value as { version?: unknown; offer?: unknown };
++		if (request.version !== 1 || typeof request.offer !== "function") return;
++		const offer = request.offer as (producer: unknown) => void;
++		offer({
++			id: "pi-compact-model",
++			version: 1,
++			produce: handleCompaction,
++			acquire: () => {
++				if (!producerAlive) throw new Error("The compact-model producer belongs to a closed session runtime.");
++				const lease = Symbol("register-coordinator");
++				coordinatorLeases.add(lease);
++				let released = false;
++				return () => {
++					if (released) return;
++					released = true;
++					coordinatorLeases.delete(lease);
++				};
++			},
++		});
++	});
++	pi.on("session_shutdown", () => {
++		producerAlive = false;
++		coordinatorLeases.clear();
++		unsubscribeProducer();
++	});
++
++	pi.on("session_before_compact", async (event, ctx): Promise<SessionBeforeCompactResult | undefined> => {
++		if (!producerAlive) return { cancel: true };
++		// Only a currently acknowledged coordinator suppresses standalone ownership.
++		// It calls handleCompaction with sanitized input and owns final protection.
++		if (coordinatorLeases.size > 0) return undefined;
++		return handleCompaction(event, ctx);
+ 	});
+ 
+ 	// ---------------------------------------------------- /compact-model

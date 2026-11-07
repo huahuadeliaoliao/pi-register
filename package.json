@@ -1,0 +1,77 @@
+{
+	"name": "pi-register",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Register for pi: a bounded, always-present, model-managed session workspace.",
+	"type": "module",
+	"license": "MIT",
+	"author": "huahuadeliaoliao",
+	"keywords": [
+		"pi-package",
+		"pi-extension",
+		"register",
+		"session",
+		"context",
+		"workspace"
+	],
+	"engines": {
+		"node": ">=22.19.0"
+	},
+	"files": [
+		"index.ts",
+		"src",
+		"compat",
+		"arch.md"
+	],
+	"pi": {
+		"extensions": [
+			"./index.ts"
+		]
+	},
+	"scripts": {
+		"check": "tsc --noEmit",
+		"lint": "biome check --error-on-warnings .",
+		"format": "biome format --write .",
+		"test": "node --test test/*.test.ts",
+		"pack:check": "npm pack --dry-run",
+		"validate": "npm run lint && npm run check && npm test && npm run pack:check",
+		"prepublishOnly": "npm run validate"
+	},
+	"peerDependencies": {
+		"@earendil-works/pi-agent-core": "*",
+		"@earendil-works/pi-ai": "*",
+		"@earendil-works/pi-coding-agent": "*",
+		"@earendil-works/pi-tui": "*",
+		"typebox": "*"
+	},
+	"peerDependenciesMeta": {
+		"@earendil-works/pi-agent-core": {
+			"optional": true
+		},
+		"@earendil-works/pi-ai": {
+			"optional": true
+		},
+		"@earendil-works/pi-coding-agent": {
+			"optional": true
+		},
+		"@earendil-works/pi-tui": {
+			"optional": true
+		},
+		"typebox": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.13",
+		"@earendil-works/pi-agent-core": "1.4.0",
+		"@earendil-works/pi-ai": "1.4.0",
+		"@earendil-works/pi-coding-agent": "1.4.0",
+		"@earendil-works/pi-tui": "1.4.0",
+		"@types/node": "24.13.5",
+		"typebox": "1.3.27",
+		"typescript": "5.9.3"
+	},
+	"dependencies": {
+		"js-tiktoken": "1.0.21"
+	}
+}
