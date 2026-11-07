@@ -1,11 +1,19 @@
 {
 	"name": "pi-register",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"private": true,
-	"description": "Register for pi: a bounded, always-present, model-managed session workspace.",
+	"description": "A living workspace for your pi agent. Keep working notes in context, not scattered across your repository.",
 	"type": "module",
 	"license": "MIT",
 	"author": "huahuadeliaoliao",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/huahuadeliaoliao/pi-register.git"
+	},
+	"homepage": "https://github.com/huahuadeliaoliao/pi-register#readme",
+	"bugs": {
+		"url": "https://github.com/huahuadeliaoliao/pi-register/issues"
+	},
 	"keywords": [
 		"pi-package",
 		"pi-extension",

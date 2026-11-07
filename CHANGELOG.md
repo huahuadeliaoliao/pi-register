@@ -1,6 +1,9 @@
 # Changelog
 
-## [Unreleased]
+## [0.1.0] - 2026-11-08
+
+First public release. Install from GitHub with
+`pi install git:github.com/huahuadeliaoliao/pi-register@v0.1.0`.
 
 ### Added
 
