@@ -1,2 +1,4 @@
 # Unified diff context markers are significant, not source indentation.
 *.patch -whitespace
+# Preserve upstream font license text verbatim.
+tools/brand/fonts/*-OFL.txt -whitespace

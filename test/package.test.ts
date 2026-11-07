@@ -64,9 +64,17 @@ test("the npm package includes its entry point and excludes development and work
 		"src/prompts.ts",
 		"src/viewer.ts",
 		"compat/pi-compact-model.patch",
+		"assets/brand/register-pi.png",
+		"assets/brand/register-pi.svg",
+		"assets/brand/register-horizontal.svg",
+		"assets/brand/register-icon.svg",
+		"assets/brand/register-icon-small.svg",
+		"assets/architecture/register-architecture.svg",
+		"assets/architecture/register-architecture.png",
 		"arch.md",
 		"package.json",
 		"README.md",
+		"CHANGELOG.md",
 		"LICENSE",
 	]) {
 		assert.ok(paths.includes(required), required);

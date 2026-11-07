@@ -21,7 +21,10 @@
 		"index.ts",
 		"src",
 		"compat",
-		"arch.md"
+		"assets/brand",
+		"assets/architecture",
+		"arch.md",
+		"CHANGELOG.md"
 	],
 	"pi": {
 		"extensions": [
